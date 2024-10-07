@@ -23,6 +23,7 @@
                 <td>
                     Ejercicios de comparaciones con numeros.
                 </td>
+            </tr>
             <tr>
                 <td>
                     <a href="fechas.php">fechas.php</a>
@@ -31,7 +32,21 @@
                     Ejercicios de fechas con la funcion date().
                 </td>
             </tr>
-                
+            <tr>
+                <td>
+                    <a href="ejercicios.php">ejercicios</a>
+                </td>
+                <td>
+                    Ejercicios
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="bucles.php">bucles WHILE y FOR</a>
+                </td>
+                <td>
+                    Bucles
+                </td>
             </tr>
         </tbody>
     </table>

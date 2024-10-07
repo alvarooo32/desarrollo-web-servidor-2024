@@ -51,11 +51,17 @@
         case "Monday":
         case "Wednesday":
         case "Friday":
-            echo "<p>Hay clase</p>";    
+            echo "<p>Hoy $dia clase</p>";    
             break;
         default:
-        echo "<p>No hay clase</p>";
+        echo "<p>Hoy $dia no hay clase</p>";
     }
+
+    /**
+     * CON UNA ESTRUCTURA SWITCH CAMBIAR LA VARIABLE DIA A ESPAÑOL
+     * 
+     * REESCRIBIR EL SWITCH DE LOS DIAS DE CLASE CON VARIABLE EN ESPAÑOL
+     */
  
 
     ?>
