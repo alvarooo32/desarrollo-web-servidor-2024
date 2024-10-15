@@ -1,0 +1,141 @@
+--------HTML---------------------------------------------------------------------------
+<head> 
+    <?php
+        error_reporting( E_ALL ); //Activa la visualizacion de los errores en la pagina
+        ini_set("display_errors", 1 );    
+
+        define("GENERAL", 1.21); //Ademas puedes definir constantes(NO OBLIGATORIO)
+    ?>
+</head>
+<body>
+
+    <form action="" method="post"> //crear un formulario web que enviará datos al servidor. 
+    //action (Especifica la URL o la página a la que se enviarán los datos si esta vacio significa que los daros se enviaran a la misma pagina)
+    //method="post": Define el método de envío de los datos en este caso POST
+
+        <label for="precio">Precio</label> //Campo de texto para escribir en el formulario
+        <input type="text" name="precio" id="precio" placeholder="Ingresa tu sueldo"> //placeholder para escribir texto dentro del textarea
+
+        <br><br>
+
+        <select name="iva"> //Desplegable para elegir opcion
+            <option value="general">General</option>
+            <option value="reducido">Reducido</option>
+            <option value="superreducido">Superreducido</option>
+        </select>
+
+        <br><br>
+        <input type="submit" value="Calcular"> //Al hacer clic en el botón "Calcular", el navegador enviará (los campos de entrada que el usuario ha completado) 
+    </form>
+
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") { //verifica si se ha enviado un formulario usando el método POST antes de procesar los datos.
+            //valores de los números enviados por el formulario
+            $precio = $_POST["precio"];//obtener el valor enviado desde un formulario HTML
+            $iva = $_POST["iva"];
+ 
+        }
+    ?>
+
+</body>
+
+
+--------VARIABLES--------------------------------------------------------------------
+$variable = pepe;
+
+--------CONDICIONALES----------------------------------------------------------------
+*******IF*********
+if($numero_aleatorio >= 1 && $numero_aleatorio <= 9){
+        $digitos = 1;
+    }elseif($numero_aleatorio >= 10 && $numero_aleatorio <= 99){
+        $digitos = 2;   
+    }else{
+        $digitos = "ERROR";   
+    }
+
+*******SWITCH*******
+switch($n){
+        case 1:
+            echo "<p>El numero es 1</p>";
+            break;
+        case 2:
+            echo "El numero es 2";
+            break;
+        default:
+            echo "El numero es 3";
+    }
+
+----------BUCLES--------------------------------------------------------------------
+********WHILE*********
+echo "<ul>";
+    while($i <= 10) {
+      echo "<li>$i</li>";
+      $i++;
+    }
+    echo "</ul>";
+
+*******FOR************
+ echo"<ul>";
+    for($i = 1; $i <= 10; $i++){
+      echo "<li>$i</li>";
+    }
+    echo"</ul>";
+
+*******DO WHILE********
+$contador = 1;
+
+do {
+    echo "Número: " . $contador . "<br>";
+    $contador++; // Incrementa el contador
+} while ($contador <= 5); // Continúa mientras contador sea menor o igual a 5
+
+---------ARRAYS-----------------------------------------------------------------------
+******ARRAY BIDIMENSIONAL*******
+$videojuegos = [
+["Disco Elysium", "RPG", 24.99],
+["Dragon Ball Z Kakarot", "Acción", 59.99],
+["Persona 3", "RPG", 24.99],
+["Commando 2", "Estrategia", 4.99],
+["Hollow Knight", "Metroidvania", 9.99],
+["Stardew Valley", "Gestión de recursos", 7.99]
+];
+
+for ($i = 0; $i < count($videojuegos); $i++) {  // Recorrer las filas
+    for ($j = 0; $j < count($videojuegos[$i]); $j++) {  // Recorrer las columnas
+        echo $videojuegos[$i][$j] . " ";  // Mostrar el elemento
+    }
+    echo "<br>";  // Salto de línea después de cada fila
+}
+
+      
+****ARRAY*****
+$frutas = ["manzana", "banana", "naranja", "fresa", "kiwi"];
+
+//recorro el array
+for ($i = 0; $i < count($frutas); $i++) {
+    echo $frutas[$i] . "<br>";
+}
+
+****ARRAY ASOCIATIVO*********
+$array2 = [
+'key1' => 'PS4',
+'key2' => 'PS5',
+'key3' => 'NINTENDO SWITCH',
+'key4' => 'XBOX ONE',
+'key5' => 'XBOX SERIES X'
+];
+
+echo $array2['key1']; // Salida: PS4
+
+
+
+
+--------METODOS------------------------------------------------------------------------
+-count($videojuegos) => devuelve el numero total de elementos que tiene
+-array_push($videojuegos, ["Dota 2", "MOBA", 0]); => agrega un elemento nuevo al final del array 
+-array_column($videojuegos, 2);=> obtener los valores de una columna específica de un array multidimensional, creando un nuevo array con esos valores.
+-array_multisort($_categoria, SORT_ASC, //se utiliza para ordenar múltiples arrays al mismo tiempo. SORT_ASC oredenado ascendente  SORT_DESC ordenado descendente
+                      $_precio, SORT_DESC,
+                      $_titulo, SORT_DESC);
+- unset($notas["Samuel"])=> destruir una variable o eliminar un elemento de un array
+- krsort($notas) => organiza un array asociativo en orden descendente según las claves,
