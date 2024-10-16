@@ -139,3 +139,5 @@ echo $array2['key1']; // Salida: PS4
                       $_titulo, SORT_DESC);
 - unset($notas["Samuel"])=> destruir una variable o eliminar un elemento de un array
 - krsort($notas) => organiza un array asociativo en orden descendente según las claves,
+- asort() => ordena alfabeticamente
+- rsort() => ordena al contrario que asort()
