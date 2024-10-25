@@ -11,10 +11,10 @@
         };
         return $pvp;
     }
-    
+
     function calcularIRPF($salario) {
         $salario_final = null;
-        
+
         $tramo1 = (12450 * 0.19);
         $tramo2 = ((20200 - 12450) * 0.24);
         $tramo3 = ((35200 - 20200) * 0.30);
