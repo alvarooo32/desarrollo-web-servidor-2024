@@ -144,6 +144,14 @@
                     Ejercicio de potencias.
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <a href="usuario.php">usuario.php</a>
+                </td>
+                <td>
+                    Formulario Usuario.
+                </td>
+            </tr>
         </tbody>
     </table>
 </body>
