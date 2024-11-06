@@ -17,27 +17,25 @@
 </head>
 <body>
     <?php
-    function depurar(string|float $entrada) : string{ //para que entre un string o float 100%  y :string para que devuelva string o float 100%
-        $salida = htmlspecialchars($entrada);//esto nos pone en modo texto cualquier cosa por si nos mete scripts y demas
-        $salida = trim($salida); // esto lo que hace es quitar los espacios de los laterales
-        $salida = stripslashes($salida); // esto te quita muchos \ que te puedan hacer bugs dentro de la aplicacion.
-        $salida = preg_replace('!\s!', ' ', $salida); //esto nos quita todos los espacios sobrantes dentro de la cadena
+    function depurar(string $entrada) : string {
+        $salida = htmlspecialchars($entrada);
+        $salida = trim($salida);
+        $salida = stripslashes($salida);
+        $salida = preg_replace('!\s+!', ' ', $salida);
         return $salida;
     }
     ?>
     <div class="container">
-        <!-- Content here -->
-
         <?php
         if($_SERVER["REQUEST_METHOD"] == "POST") {
-            $tmp_usuario = $_POST["usuario"];
-            $tmp_nombre = $_POST["nombre"];
-            $tmp_apellidos = $_POST["apellidos"];
-            $tmp_dni = $_POST["dni"];
-            $tmp_correo = $_POST["correo"];
-            $tmp_fecha_nacimiento = $_POST["fecha_nacimiento"];
+            $tmp_usuario = depurar($_POST["usuario"]);
+            $tmp_nombre = depurar($_POST["nombre"]);
+            $tmp_apellidos = depurar($_POST["apellidos"]);
+            $tmp_dni = depurar($_POST["dni"]);
+            $tmp_correo = depurar($_POST["correo"]);
+            $tmp_fecha_nacimiento = depurar($_POST["fecha_nacimiento"]);
 
-            echo "<h1>$tmp_fecha_nacimiento</h1>";
+            echo "<h1>" . strlen($tmp_nombre) . "</h1>";
 
             if($tmp_dni == '') {
                 $err_dni = "El DNI es obligatorio";
@@ -135,13 +133,13 @@
                     $err_nombre = "El nombre debe tener entre 2 y 40 caracteres";
                 } else {
                     //  letras, espacios en blanco y tildes
-                    $patron = "/^[a-zA-Z áéióúÁÉÍÓÚñÑüÜ]+$/";
-                    if(!preg_match($patron, $tmp_nombre)) {
+                    //$patron = "/^[a-zA-Z áéióúÁÉÍÓÚñÑüÜ]+$/";
+                    /*if(!preg_match($patron, $tmp_nombre)) {
                         $err_nombre = "El nombre solo puede contener letras y espacios
                             en blanco";
-                    } else {
-                        $nombre = $tmp_nombre;
-                    }
+                    } else {*/
+                        $nombre = ucwords(strtolower($tmp_nombre));
+                    //}
                 }
             }
 
@@ -156,7 +154,7 @@
                     list($anno_actual,$mes_actual,$dia_actual) = explode('-',$fecha_actual);
                     list($anno,$mes,$dia) = explode('-',$tmp_fecha_nacimiento);
 
-                    echo "<h2>Año: $anno, Año actual: $anno_actual</h2>";
+                    //echo "<h2>Año: $anno, Año actual: $anno_actual</h2>";
                     if($anno_actual - $anno < 18) {
                         $err_fecha_nacimiento = "No puedes ser menor de edad";
                     } elseif($anno_actual - $anno == 18) {
@@ -185,6 +183,8 @@
                         } elseif($mes_actual - $mes < 0) {
                             $fecha_nacimiento = $tmp_fecha_nacimiento;
                         } 
+                    } else {
+                        $fecha_nacimiento = $tmp_fecha_nacimiento;
                     }
                 }
             }
@@ -228,11 +228,13 @@
             </div>
         </form>
         <?php
-        if(isset($dni) && isset($correo) && isset($usuario) && isset($nombre)) { ?>
-            <h1><?php echo $dni ?></h1>
-            <h1><?php echo $correo ?></h1>
-            <h1><?php echo $usuario ?></h1>
-            <h1><?php echo $nombre ?></h1>
+        if(isset($dni) && isset($correo) && isset($usuario) && isset($nombre)
+                && isset($fecha_nacimiento)) { ?>
+            <p><?php echo $dni ?></p>
+            <p><?php echo $correo ?></p>
+            <p><?php echo $usuario ?></p>
+            <p><?php echo $nombre ?></p>
+            <p><?php echo $fecha_nacimiento ?></p>
         <?php } ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
