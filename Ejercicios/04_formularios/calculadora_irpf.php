@@ -8,7 +8,7 @@
         error_reporting( E_ALL );
         ini_set( "display_errors", 1 );
 
-        require("../05_funciones/calculadora_irpf.php");
+        require("../05_funciones/economia.php");
     ?>
 </head>
 <body>
