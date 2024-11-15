@@ -16,6 +16,7 @@
     </style>
 </head>
 <body>
+    <!--Funcion que depura codigo-->
     <?php
         // string en parámetros para obligar a que entre un String
         // : string para 100% devolver un string 
@@ -37,6 +38,7 @@
 
         <?php
         if($_SERVER["REQUEST_METHOD"] == "POST") {
+            //CRecibo todas las variable y la depuro del tiron
             $tmp_usuario = depurar($_POST["usuario"]);
             $tmp_nombre = depurar($_POST["nombre"]);
             $tmp_apellidos = depurar($_POST["apellidos"]);
@@ -54,20 +56,20 @@
                 echo "<h1>Ok,la fecha está bien</h1>";
             }
 
-            if($tmp_dni == '') {
-                $err_dni = "El DNI es obligatorio";
+            if($tmp_dni == '') { //DNI no puede estar vacio
+                $err_dni = "El DNI es obligatorio"; //Guardo los posible errores en una variable para dps mostrarlos
             } else {
                 // Lo convierto a mayúscula para comprobarlo una vez sea mayúscula
-                $tmp_dni = strtoupper($tmp_dni);
-                $patron = "/^[0-9]{8}[A-Z]$/";
-                if(!preg_match($patron,$tmp_dni)) {
+                $tmp_dni = strtoupper($tmp_dni);//convierte el valor de $tmp_dni a mayúsculas para asegurar un formato consistente en la validación del DNI.
+                $patron = "/^[0-9]{8}[A-Z]$/"; 
+                if(!preg_match($patron,$tmp_dni)) { //verifica si el valor de $tmp_dni no coincide con el formato definido en $patron
                     $err_dni = "El DNI debe tener 8 dígitos y una letra";
                 } else {
                     // Cogemos los 8 números con substr (también vale 0, -1);
-                    $numero_dni = (int)substr($tmp_dni,0,8);
-                    $letra_dni = substr($tmp_dni,8,1);
+                    $numero_dni = (int)substr($tmp_dni,0,8); //La línea extrae los primeros 8 dígitos de $tmp_dni y los convierte en un número entero.
+                    $letra_dni = substr($tmp_dni,8,1); //extrae un carácter en la posición 8 de $tmp_dni, que corresponde a la letra del DNI.
 
-                    $resto_dni = $numero_dni % 23;
+                    $resto_dni = $numero_dni % 23;//resto de la división del número del DNI entre 23, lo que se usa para determinar la letra correspondiente del DNI.
 
                     //Opción menos optimizada (más facil de pensar);
                     /*
@@ -100,7 +102,8 @@
 
                     // Opción optimizada (algo más complicada de pensar);
                     $letras_dni = "TRWAGMYFPDXBNJZSQVHLCKE";
-                    // Coge $letras_dni, va a la posición $resto_dni y extrae ese char
+
+                    // Coge $letras_dni, va a la posición $resto_dni y extrae ese caracter
                     $letra_correcta = substr($letras_dni,$resto_dni,1);
 
                     if($letra_dni != $letra_correcta) {
@@ -111,38 +114,42 @@
                 }
             }
 
-            if($tmp_correo == '') {
+            if($tmp_correo == '') { // El correo no puede estar vacio
                 $err_correo = "El correo electrónico es obligatorio";
             } else {
                 // Formato de correo electrónico
                 $patron = "/^[a-zA-Z0-9_\-.+]+@([a-zA-Z0-9-]+.)+[a-zA-Z]+$/";
-                if(!preg_match($patron, $tmp_correo)) {
+                if(!preg_match($patron, $tmp_correo)) {//verifica si el valor de $tmp_correo no coincide con el formato definido en $patron
                     $err_correo = "El correo no es válido";
                 } else {
                     $palabras_baneadas = ["caca","peo","recorcholis","caracoles","repampanos"];
 
                     $palabras_encontradas = "";
+                    // Recorremos el array de palabras prohibidas
                     foreach($palabras_baneadas as $palabra_baneada) {
-                        if(str_contains($tmp_correo,$palabra_baneada)) {
+                        // Si el correo contiene la palabra prohibida, la agregamos a la lista de palabras encontradas
+                        if(str_contains($tmp_correo, $palabra_baneada)) { // verificar si una cadena de texto contiene una subcadena específica
                             $palabras_encontradas = "$palabra_baneada, " . $palabras_encontradas;
                         }
-                        if($palabras_encontradas != '') {
-                            $err_correo = "No se permiten las palabras: $palabras_encontradas";
-                        } else {
-                            $correo = $tmp_correo;
-                        }
+                    }
+                    // Si se encontraron palabras prohibidas, asignamos un mensaje de error
+                    if($palabras_encontradas != '') {
+                        $err_correo = "No se permiten las palabras: $palabras_encontradas";
+                    } else {
+                        // Si no se encontraron palabras prohibidas, guardamos el correo
+                        $correo = $tmp_correo;
                     }
                 }
             }
 
-            if($tmp_usuario == '') {
+            if($tmp_usuario == '') { // El campo usuario no puede estar vacio
                 $err_usuario = "El usuario es obligatorio";
             } else {
                 // A-Z (mayus o minus), números, barrabaja (4-12 chars)
                 // Tiene que ir entre /^$/
                 $patron = "/^[a-zA-Z0-9_]{4,12}$/";
                 // Comprueba si existe el patron en $tmp_usuario
-                if(!preg_match($patron, $tmp_usuario)) {
+                if(!preg_match($patron, $tmp_usuario)) { //verifica si el valor de $tmp_usuario no coincide con el formato definido en $patron
                     $err_usuario = "El usuario debe contener de 4 a 12 letras, 
                         números o barrabaja";
                 } else {
@@ -150,20 +157,20 @@
                 }
             }
 
-            if($tmp_nombre == '') {
+            if($tmp_nombre == '') { // El campo nombre no puede estar vacio
                 $err_nombre = "El nombre es obligatorio";
             } else {
-                // Mejor separar los errores para mejor exp del usuario
-                if(strlen($tmp_nombre) < 2 || strlen($tmp_nombre) > 40) {
+                // Mejor separar los errores para mejor experiencia del usuario
+                if(strlen($tmp_nombre) < 2 || strlen($tmp_nombre) > 40) { // verifica si la longitud de $tmp_nombre es menor de 2 o mayor de 40 caracteres / strlen() devuelve la longitud de la cadena
                     $err_nombre = "El nombre debe tener entre 2 y 40 caracteres";
                 } else {
                     // Letras, espacios en blanco y tildes
                     $patron = "/^[a-zA-Z áéióúÁÉÍÓÚñÑüÜ]+$/";
-                    if(!preg_match($patron, $tmp_nombre)) {
+                    if(!preg_match($patron, $tmp_nombre)) {//verifica si el valor de $tmp_nombre no coincide con el formato definido en $patron
                         $err_nombre = "El nombre solo puede contener letras y espacios en blanco";
                     } else {
                         // ucwords para poner la primera letra en mayúscula
-                        $nombre = ucwords(strtolower($tmp_nombre));
+                        $nombre = ucwords(strtolower($tmp_nombre));//convierte el texto a minúsculas y luego pone en mayúscula la primera letra de cada palabra.
                     }
                 }
             }
@@ -172,12 +179,12 @@
                 $err_apellidos = "Los apellidos son obligatorios";
             } else {
                 // Mejor separar los errores para mejor exp del usuario
-                if (strlen($tmp_apellidos) < 2 or strlen($tmp_apellidos) > 40) {
+                if (strlen($tmp_apellidos) < 2 or strlen($tmp_apellidos) > 40) {// verifica si la longitud de $tmp_nombre es menor de 2 o mayor de 40 caracteres / strlen() devuelve la longitud de la cadena
                     $err_apellidos = "Los apellidos deben tener entre 2 y 40 caracteres";
                 } else {
                     // Letras, espacios en blanco y tildes
                     $patron = "/^[a-zA-Z àèìòùÀÈÌÒÙñÑüÜ]+$/";
-                    if (!preg_match($patron, $tmp_apellidos)) {
+                    if (!preg_match($patron, $tmp_apellidos)) {//verifica si el valor de $tmp_apellidos no coincide con el formato definido en $patron
                         $err_apellidos = "Los apellidos solo pueden contener letras y espacios en blanco";
                     } else {
                         $apellidos = $tmp_apellidos;
@@ -189,7 +196,7 @@
                 $err_fecha_nacimiento = "La fecha de nacimiento es obligatoria";
             } else {
                 $patron = "/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/";
-                if(!preg_match($patron, $tmp_fecha_nacimiento)) {
+                if(!preg_match($patron, $tmp_fecha_nacimiento)) { //verifica si el valor de $tmp_frcha de nacimiento no coincide con el formato definido en $patron
                     $err_fecha_nacimiento = "Formato de fecha incorrecto";
                 } else {
                     $fecha_actual = date("Y-m-d");

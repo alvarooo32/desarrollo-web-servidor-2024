@@ -9,7 +9,7 @@
         error_reporting( E_ALL );
         ini_set("display_errors", 1 );
 
-        require("../05_funciones/depurar.php");
+        //require("../05_Funciones/depurar.php");
     ?>
     <style>
         .error {
@@ -18,6 +18,21 @@
     </style>
 </head>
 <body>
+    <?php
+        // string en parámetros para obligar a que entre un String
+        // : string para 100% devolver un string 
+        function depurar(string $entrada) : string {
+            // Para que el usuario no pueda usar etiquetas en los campos Ej: <h1>Hola</h1>
+            $salida = htmlspecialchars($entrada);
+            // Para quitar los espacios de delante y detrás
+            $salida = trim($salida);
+            // Quita posibles bugs muy raros como que el usuario introduzca: \n (No está de más ponerla)
+            $salida = stripcslashes($salida);
+            // Para quitar los múltiples espacios entre variables y demás
+            $salida = preg_replace('!\s+!', ' ', $salida);
+            return $salida;
+        }
+    ?>
     <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $tmp_nombre = depurar($_POST["nombre"]);
