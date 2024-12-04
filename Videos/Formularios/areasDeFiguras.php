@@ -14,9 +14,7 @@
 
         $figura = $_POST["figura"];
         
-        switch($figura){
-            case 
-        }
+        
 
     ?>
 

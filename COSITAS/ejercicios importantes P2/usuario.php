@@ -200,7 +200,7 @@
                     $err_fecha_nacimiento = "Formato de fecha incorrecto";
                 } else {
                     $fecha_actual = date("Y-m-d");
-                    // Asigna variables a los 3 campos del explode (explode == split)
+                    // Asigna variables a los 3 campos (Y-M-D) del explode (explode == split)
                     list($anno_actual,$mes_actual,$dia_actual) = explode('-',$fecha_actual);
                     list($anno,$mes,$dia) = explode('-',$tmp_fecha_nacimiento);
 
@@ -246,7 +246,7 @@
             <div class="mb-3">
                 <label class="form-label">DNI</label>
                 <input class="form-control" type="text" name="dni">
-                <?php if(isset($err_dni)) echo "<span class='error'>$err_dni</span>"; ?>
+                <?php if(isset($err_dni)) echo "<span class='error'>$err_dni</span>";//verifica si existe un mensaje de error relacionado con un DNI y lo muestra si está present muestra los errores?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Correo electrónico</label>
@@ -282,7 +282,7 @@
             </div>
         </form>
         <?php
-        if(isset($dni) && isset($correo) && isset($usuario) && isset($nombre) && isset($fecha_nacimiento)) { ?>
+        if(isset($dni) && isset($correo) && isset($usuario) && isset($nombre) && isset($fecha_nacimiento)) { //está realizando una verificación y luego mostrando información si ciertas variables están definidas. Muestra el resultado final?>
             <p><?php echo $dni ?></p>
             <p><?php echo $correo ?></p>
             <p><?php echo $usuario ?></p>

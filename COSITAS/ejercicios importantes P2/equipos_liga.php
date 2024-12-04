@@ -46,14 +46,14 @@
             if ($tmp_nombre == "") {
                 $err_nombre = "El nombre es obligatorio";
             } else {
-                if (strlen($tmp_nombre) < 3 || strlen($tmp_nombre) > 20) {
+                if (strlen($tmp_nombre) < 3 || strlen($tmp_nombre) > 20) { //validar la longitud de una cadena 
                     $err_nombre = "El nombre debe contener de 3 a 20 dígitos";
                 } else {
                     $patron = "/^[a-zA-Z áéióúÁÉÍÓÚñÑüÜ.]+$/";
                     if (!preg_match($patron, $tmp_nombre)) {
                         $err_nombre = "El nombre solo puede contener letras, espacios y puntos";
                     } else {
-                        $nombre = ucwords(strtolower($tmp_nombre));
+                        $nombre = ucwords(strtolower($tmp_nombre));// lo pasa todo a lower menos la primera letra
                     }
                 }
             }

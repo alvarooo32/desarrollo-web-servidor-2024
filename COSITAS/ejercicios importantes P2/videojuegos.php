@@ -30,7 +30,7 @@
                 $err_consola = "La consola es obligatoria";
             } else {
                 $consolas_validas = ["ps4", "ps5", "switch", "xboxsx"];
-                if (!in_array($tmp_consola, $consolas_validas)) {
+                if (!in_array($tmp_consola, $consolas_validas)) {//verifica si un valor específico ($tmp_consola) no está presente en un array ($consolas_validas)
                     $err_consola = "La consola no es válida";
                 } else {
                     $consola = $tmp_consola;
@@ -40,11 +40,11 @@
                 $err_fecha_lanzamiento = "La fecha de lanzamiento es obligatoria";
             } else {
                 $patron = "/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/";
-                if (!preg_match($patron, $tmp_fecha_lanzamiento)) {
+                if (!preg_match($patron, $tmp_fecha_lanzamiento)) { // verifica si una fecha no cumple con un formato específico
                     $err_fecha_lanzamiento = "Formato de fecha incorrecto";
                 } else {
                     list($anno_lanzamiento, $mes_lanzamiento, $dia_lanzamiento) = 
-                        explode("-", $tmp_fecha_lanzamiento);
+                        explode("-", $tmp_fecha_lanzamiento); //separacion de cadenas con un gion - de una cadena de fecha en sus componentes utilizando las funciones list() 
                     if ($anno_lanzamiento < 1947) {
                         $err_fecha_lanzamiento = "El año no puede ser anterior a 1947";
                     } else {
