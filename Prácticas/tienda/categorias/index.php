@@ -22,7 +22,11 @@
         } ?>
         <style>
             .error{
-                color: red;
+            color: red;
+            }
+            img{
+                width: 160px;
+                height: 200px;
             }
         </style>
 </head>
@@ -54,26 +58,23 @@
         <a href="nueva_categoria.php" class="btn btn-info">Agregar una categoría</a>
         <a href="../productos/index.php" class="btn btn-success">Ir a tabla Productos</a>
         </div>
-        <table class="table table-info table-striped table-hover">
+        <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>Categoria</th>
                     <th>Descripcion</th>
-                    <th></th>
+                    <th></th><!--Para rellenar el hueco de los dos botones Editar y borrar-->
                     <th></th>
                 </tr>
             </thead>
             <?php
                 while ($fila = $resultado -> fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td class='table-success'>" . $fila["categoria"] . "</td>";
-                    echo "<td class='table-danger'>" . $fila["descripcion"] . "</td>";
+                    echo "<td>" . $fila["categoria"] . "</td>";
+                    echo "<td>" . $fila["descripcion"] . "</td>";
                     ?>
                     <td>
-                        <a  class="btn btn-primary"
-                            href="editar_categoria.php?categoria=<?php echo $fila["categoria"] ?>">
-                            Editar
-                        </a>
+                        <a  class="btn btn-primary" href="editar_categoria.php?categoria=<?php echo $fila["categoria"] ?>"> Editar</a>
                     </td>
                     <td>
                         <form action="" method="post">

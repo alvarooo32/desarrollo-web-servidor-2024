@@ -15,7 +15,7 @@
         if (isset($_SESSION["usuario"])) {
             echo "<h2>Bienvenid@ " . $_SESSION["usuario"] . "</h2>";
             echo "<a class='btn btn-danger' href='./usuario/cerrar_sesion.php'>Cerrar sesión</a>";
-            echo "<a href='./usuario/cambiar_credenciales.php'></a>";
+            echo "<a  class='btn btn-info' href='./usuario/cambiar_credenciales.php' >Cambiar Credenciales</a>";
         } else {
             echo "<a class='btn btn-primary' href='./usuario/iniciar_sesion.php'>Iniciar sesión</a>";
         }
@@ -33,7 +33,6 @@
 </head>
 <body>
     <div class="container">
-        <a class="btn btn-warning" href="usuario/cerrar_sesion.php">Cerrar sesión</a>
         <h1>Tabla de productos</h1>
         <?php
             if($_SERVER["REQUEST_METHOD"] == "POST") {

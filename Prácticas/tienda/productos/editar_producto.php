@@ -45,11 +45,11 @@
         $resultado = $_conexion -> query($sql);
         
         while($datos = $resultado -> fetch_assoc()) {
-            $nombre_actual = $datos_actuales["nombre"];
-            $precio_actual = $datos_actuales["precio"];
-            $categoria_actual = $datos_actuales["categoria"];
-            $stock_actual = $datos_actuales["stock"];
-            $descripcion_actual = $datos_actuales["descripcion"];
+            $nombre_actual = $dato_actual["nombre"];
+            $precio_actual = $dato_actual["precio"];
+            $categoria_actual = $dato_actual["categoria"];
+            $stock_actual = $dato_actual["stock"];
+            $descripcion_actual = $dato_actual["descripcion"];
         }
         $sql = "SELECT * FROM categorias ORDER BY categoria";
         $resultado = $_conexion -> query($sql);
@@ -70,10 +70,10 @@
             if($tmp_nombre == ''){
                 $err_nombre = "El nombre es obligatorio";
             } else {
-                if(strlen($tmp_nombre) > 50){
+                if(strlen($tmp_nombre) > 51){
                     $err_nombre = "El nombre es de 50 caracteres maximo";
-                }elseif (strlen($tmp_nombre) < 2) {
-                    $err_nombre = "El nombre es de 3 caracteres minimo";
+                }elseif (strlen($tmp_nombre) < 1) {
+                    $err_nombre = "El nombre es de 2 caracteres minimo";
                 }
                  else {
                     $patron = "/^[0-9a-zA-Z áéíóúÁÉÍÓÚ]+$/";

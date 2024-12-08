@@ -27,7 +27,7 @@
 <body>
     
     <div class="container">
-        <h1>Editar categoria</h1>
+        <h1>Editar Categorias</h1>
         <?php
         $categoria = $_GET["categoria"];
         $sql = "SELECT * FROM categorias WHERE categoria = '$categoria'";

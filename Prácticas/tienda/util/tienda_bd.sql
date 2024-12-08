@@ -21,6 +21,7 @@ CREATE TABLE usuarios (
 	usuario VARCHAR(15) PRIMARY KEY,
     contrasena VARCHAR(15)
 );
+
 SELECT * FROM categorias;
 SELECT * FROM productos;
 SELECT * FROM usuario;

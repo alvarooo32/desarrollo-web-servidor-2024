@@ -42,8 +42,10 @@
             if($resultado -> num_rows == 1){
                 $err_usuario = "El usuario ya ha sido registrado";
             } else {
-                if(strlen($tmp_usuario) > 15 || strlen($tmp_usuario) < 3){
-                    $err_usuario = "El usuario debe tener como mínimo 3 y máximo 15 carácteres";
+                if(strlen($tmp_usuario) > 15 ){
+                    $err_usuario = "El usuario debe tener como máximo 15 carácteres";
+                }else if(strlen($tmp_usuario) < 3){
+                    $err_usuario = "El usuario debe tener como mínimo 3";
                 } else {
                     $patron = "/^[0-9a-zA-ZáéíóúÁÉÍÓÚ]+$/";
                     if(!preg_match($patron, $tmp_usuario)){
@@ -58,20 +60,24 @@
         if($tmp_contrasena == ""){
             $err_contrasena = "La contraseña es obligatoria";
         } else {
-            if(strlen($tmp_contrasena) > 15 || strlen($tmp_contrasena) < 8){
-                $err_contrasena = "La contraseña debe tener como mínimo 8 y máximo 15 carácteres";
-            } else {
+            if(strlen($tmp_contrasena) > 15){
+                $err_contrasena = "La contraseña debe tener como máximo 15 carácteres";
+            }else if(strlen($tmp_contrasena) < 8){
+                $err_contrasena = "La contraseña debe tener como mínimo 8 ";
+            }else {
                 $patron = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/";
                 if(!preg_match($patron, $tmp_contrasena)){
                     $err_contrasena = "La contraseña debe tener letras en minúsculas y mayúsculas, números y puede tener carácteres especiales";
                 } else {
-                    $contrasena_cifrada = password_hash($tmp_contrasena,PASSWORD_DEFAULT);
+                    $contrasena_privada = password_hash($tmp_contrasena,PASSWORD_DEFAULT);
+                    $sql = "UPDATE usuarios SET contrasena = '$contrasena_privada' WHERE usuario = '$usuario'";
+                    $_conexion -> query($sql);
                 }                    
             }
         }
 
-        if(isset($usuario) && isset($contrasena_cifrada)){
-            $sql = "INSERT INTO usuarios VALUES ('$usuario','$contrasena_cifrada')";
+        if(isset($usuario) && isset($contrasena_privada)){
+            $sql = "INSERT INTO usuarios VALUES ('$usuario','$contrasena_privada')";
             $_conexion -> query($sql);
             header("location: iniciar_sesion.php");
             exit;
@@ -97,7 +103,7 @@
             </div>
         </form>
         <div class="mb-3">
-            <h3>Si ya tienes cuenta, inicia sesión</h3>
+            <h3>¿tienes cuenta?, inicia sesión</h3>
             <a class="btn btn-warning" href="iniciar_sesion.php">Iniciar sesión</a>
             <a href="../index.php" class="btn btn-secondary">Volver a inicio</a>
         </div>

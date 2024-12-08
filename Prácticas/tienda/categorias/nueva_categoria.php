@@ -16,19 +16,6 @@
             exit;
         }
     ?>
-    <?php
-    function depurar(string $entrada) : string {
-        // Para que el usuario no pueda usar etiquetas en los campos Ej: <h1>Hola</h1>
-        $salida = htmlspecialchars($entrada);
-        // Para quitar los espacios de delante y detrás
-        $salida = trim($salida);
-        // Quita posibles bugs muy raros como que el usuario introduzca: \n (No está de más ponerla)
-        $salida = stripcslashes($salida);
-        // Para quitar los múltiples espacios entre variables y demás
-        $salida = preg_replace('!\s+!', ' ', $salida);
-        return $salida;
-    }
-?>
     <style>
         .error{
             color: red;
@@ -36,6 +23,19 @@
     </style>
 </head>
 <body>
+    <?php
+        function depurar(string $entrada) : string {
+            // Para que el usuario no pueda usar etiquetas en los campos Ej: <h1>Hola</h1>
+            $salida = htmlspecialchars($entrada);
+            // Para quitar los espacios de delante y detrás
+            $salida = trim($salida);
+            // Quita posibles bugs muy raros como que el usuario introduzca: \n (No está de más ponerla)
+            $salida = stripcslashes($salida);
+            // Para quitar los múltiples espacios entre variables y demás
+            $salida = preg_replace('!\s+!', ' ', $salida);
+            return $salida;
+        }
+    ?>
     <?php 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $tmp_categoria = depurar($_POST["categoria"]);
@@ -61,16 +61,27 @@
                 }
             }
 
-            if($tmp_descripcion == ''){
-                $err_descripcion = "La descripcion es obligatoria, no puede estar vacia";
+            if($tmp_descripcion == "") {
+                $error_descripcion = "Debes introducir una descripcion";
             } else {
                 if(strlen($tmp_descripcion) > 255){
-                    $err_descripcion = "La descripcion no puede tener mas de 255 caracteres";
-                } else{
+                    $error_descripcion = "El nombre de la categoria no puede tener mas de 255 caracteres";
+                }else if(strlen($tmp_descripcion) < 2){
+                    $error_descripcion = "El nombre de la categoria no puede tener menos de 2 caracteres";
+                } else {
+                    $patron ="/^[a-zA-Zaéíóú´AÉÍÓÚñÑ., ]{2,255}$/";
+
+                if(!preg_match($patron, $tmp_descripcion)){
+                    $error_descripcion = "El nombre solo puede contener letras y espacios";
+                } else {
                     $descripcion = $tmp_descripcion;
                 }
-            }
-            //Verifica que no este ni la descripcion ni la categoria vacia
+                
+                }
+                
+            } 
+
+            //Verifica que no este ni la descripcion ni la categoria vacia y si no lo esta las introduce en la base de datos
             if (isset($descripcion) && isset($categoria)){
                 $sql = "INSERT INTO categorias (categoria, descripcion)
                     VALUES ('$categoria','$descripcion')";
