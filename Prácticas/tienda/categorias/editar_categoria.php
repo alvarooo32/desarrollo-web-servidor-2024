@@ -30,8 +30,23 @@
         <h1>Editar Categorias</h1>
         <?php
         $categoria = $_GET["categoria"];
+
+        /*
         $sql = "SELECT * FROM categorias WHERE categoria = '$categoria'";
         $resultado = $_conexion -> query($sql);
+        */
+
+        //1. Preparacion            
+        $sql = $_conexion -> prepare("SELECT * FROM categorias WHERE categoria = ?");
+
+        //2. Enlazado
+        $sql -> bind_param("s",$categoria);
+
+        //3. Ejecución
+        $sql -> execute();
+        
+        //4. Retrieve
+        $resultado = $sql -> get_result();
         
         while($fila = $resultado -> fetch_assoc()) {
             $categoria = $fila["categoria"];

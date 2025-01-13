@@ -19,9 +19,10 @@ CREATE TABLE productos (
 
 CREATE TABLE usuarios (
 	usuario VARCHAR(15) PRIMARY KEY,
-    contrasena VARCHAR(15)
+    contrasena VARCHAR(255) NOT NULL
 );
-
 SELECT * FROM categorias;
 SELECT * FROM productos;
-SELECT * FROM usuario;
+SELECT * FROM usuarios;
+
+

@@ -30,9 +30,20 @@
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["usuario"];
         $contrasena = $_POST["contrasena"];
-
+        
+        /*
         $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario'";
         $resultado = $_conexion -> query($sql);
+        */
+        #1. Prepare
+        $sql = $_conexion -> prepare("SELECT * FROM usuarios WHERE usuario = ?");
+        #2. Binding
+        $sql -> bind_param("ss",$usuario);
+        #3. Execute
+        $sql -> execute();
+        #4. Retrieve
+        $resultado = $sql -> get_result();
+
         //var_dump($resultado);
 
         if($resultado -> num_rows == 0) {
@@ -52,12 +63,18 @@
                 session_start();
                 $_SESSION["usuario"] = $usuario;
                 //$_COOKIE["loquesea"] = "loquesea";
+
+                #5. Cerrar conexion dps de la consulta
+                $_conexion -> close();
+
                 header("location: ../index.php");
                 exit;
             } else {
                 echo "<h2>La contraseña es incorrecta</h2>";
             }
         }
+
+        
     }
     ?>
     <div class="container">

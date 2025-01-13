@@ -33,8 +33,28 @@
 
         $contrasena_cifrada = password_hash($contrasena,PASSWORD_DEFAULT);
 
+        /*
         $sql = "INSERT INTO usuarios VALUES ('$usuario','$contrasena_cifrada')";
         $_conexion -> query($sql);
+        */
+
+        #1. Preparacion
+        $sql = $conexion -> prepare("INSERT INTO usuarios (usuario, contrasena, contrasena_cifrada VALUES (?,?,?)");
+
+        #2. Enlazado
+        $sql -> bind_param("sss", 
+            $usuario,
+            $contrasena,
+            $contrasena_cifrada
+        );
+
+        #3. Ejeccucion
+        $sql -> execute();
+
+        #4. Retrieve no pq es solo en los select
+
+        #5.cerrar la consulta
+        $_conexion -> close();
 
         header("location: iniciar_sesion.php");
         exit;
