@@ -21,7 +21,8 @@ Update
                     num_temporadas = $num_temporadas
                     WHERE id_anime = $id_anime
                 ";
-                $_conexion -> query($sql); */
+                $_conexion -> query($sql); 
+    */
 
     # 1. Prepare
     $sql = $_conexion -> prepare($sql = "UPDATE animes SET
@@ -87,3 +88,22 @@ Delete
 
     #3. Execute
     $sql -> execute();
+
+
+Order By
+
+    /*
+        $sql = "SELECT * FROM estudios ORDER BY nombre_estudio";
+        $resultado = $_conexion -> query($sql);
+    */
+
+        # 1. Prepare
+        $sql = $_conexion -> prepare("SELECT * FROM estudios ORDER BY ?");
+        # 2. Bind
+        $sql -> bind_param("s",$nombre_estudio);
+        # 3. Execute
+        $sql -> execute();
+        # 4. Retrieve (solo en los select)
+        $resultado = $sql -> get_result();
+
+        $estudios = [];

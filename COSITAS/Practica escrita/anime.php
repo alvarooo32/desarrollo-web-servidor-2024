@@ -1,4 +1,4 @@
-<body>
+ <body>
     <div class="container">
         <a class="btn btn-warning" href="usuario/cerrar_sesion.php">Cerrar sesión</a>
         <h1>Tabla de animes</h1>
